@@ -12,7 +12,7 @@ def dot(a, b):
 
 # Pocita maticovy soucin dvou matic
 def matmul(a, b):
-    # Dimanze matic
+    # Dimenze matic
     m = len(a)
     n = len(a[0])
     k = len(b)
@@ -65,7 +65,7 @@ def main():
             (matmul, np.matmul, [mat1, mat2]),
             (transpose, np.transpose, [mat1]),
             (gradient, np.gradient, [vec1]),
-            (trapezoid, np.trapezoid, [vec1]),
+            (trapezoid, np.trapezoid, [vec1]),  # Používáme np.trapezoid
             ]
 
     # Cyklus pres pary funkci a jejich argumenty
@@ -75,12 +75,12 @@ def main():
         # Vlastni implementace
         custom_start = time()
         custom_func(*args)
-        custom_time = time() - custom_start
+        custom_time = max(time() - custom_start, 1e-9)  # Zajisti, ze cas neni nulovy
 
         # Numpy
         module_start = time()
         module_func(*args)
-        module_time = time() - module_start
+        module_time = max(time() - module_start, 1e-9)  # Zajisti, ze cas neni nulovy
 
         # Vypiseme vysledek mereni
         print(f"{func_name}: NumPy je {custom_time/module_time:.2f}x rychlejsi")
